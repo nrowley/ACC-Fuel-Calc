@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Result from "./Result";
 import { Button } from "react-bootstrap";
+import { doWork } from "./calculation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
 
@@ -29,8 +30,7 @@ export default class form extends Component {
 
     event.preventDefault();
     const { duration, fuelUsage, lapTimes } = this.state;
-    const lapTimeInMinutes = this.minutesToSeconds(lapTimes);
-    const totalFuelRequired = this.calculateFuel(fuelUsage, lapTimeInMinutes, duration);
+    const totalFuelRequired = doWork(lapTimes, fuelUsage, duration);
 
     this.setState({
       fuelRequired: totalFuelRequired,
@@ -60,20 +60,6 @@ export default class form extends Component {
 
     //this.render();
   }
-
-  //functions
-  minutesToSeconds = (lapTimes) => {
-    const wholeMinutes = Number(lapTimes.split(":")[0]);
-    const seconds = Number(lapTimes.split(":")[1]) / 60;
-
-    console.log((wholeMinutes + seconds).toPrecision(3));
-
-    return (wholeMinutes + seconds).toPrecision(3);
-  };
-
-  calculateFuel = (fuelUsage, lapTimes, duration) => {
-    return ((duration / lapTimes) * fuelUsage).toPrecision(2);
-  };
 
   render() {
     return (
