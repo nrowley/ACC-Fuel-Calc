@@ -3,7 +3,6 @@ import Result from "./Result";
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
-import calc from "../calculations.js";
 
 export default class form extends Component {
   constructor(props) {
@@ -13,7 +12,7 @@ export default class form extends Component {
       fuelUsage: "",
       lapTimes: "",
       showFuelRequired: false,
-      fuelRequired: "",
+      fuelRequired: 0,
     };
 
     this.submitClick = this.submitClick.bind(this);
@@ -22,26 +21,25 @@ export default class form extends Component {
     this.handleLapTimesChange = this.handleLapTimesChange.bind(this);
   }
 
-  submitClick(event) {
+  submitClick = (event) => {
     //console.log(this.state.duration);
     /*
     calculate fuel usage..
     */
 
+    event.preventDefault();
     const { duration, fuelUsage, lapTimes } = this.state;
-    const lapTimeInMinutes = calc.minutesToSeconds(lapTimes);
-    const fuelRequired = calc.calculateFuel(fuelUsage, lapTimeInMinutes, duration);
+    const lapTimeInMinutes = this.minutesToSeconds(lapTimes);
+    const totalFuelRequired = this.calculateFuel(fuelUsage, lapTimeInMinutes, duration);
 
     this.setState({
-      fuelRequired: fuelRequired,
+      fuelRequired: totalFuelRequired,
     });
 
     this.setState({
       showFuelRequired: true,
     });
-
-    event.preventDefault();
-  }
+  };
 
   handleDurationChange(event) {
     this.setState({
@@ -59,9 +57,23 @@ export default class form extends Component {
     this.setState({
       lapTimes: event.target.value,
     });
+
+    //this.render();
   }
 
   //functions
+  minutesToSeconds = (lapTimes) => {
+    const wholeMinutes = Number(lapTimes.split(":")[0]);
+    const seconds = Number(lapTimes.split(":")[1]) / 60;
+
+    console.log((wholeMinutes + seconds).toPrecision(3));
+
+    return (wholeMinutes + seconds).toPrecision(3);
+  };
+
+  calculateFuel = (fuelUsage, lapTimes, duration) => {
+    return ((duration / lapTimes) * fuelUsage).toPrecision(2);
+  };
 
   render() {
     return (
@@ -95,9 +107,9 @@ export default class form extends Component {
               placeholder="Enter lap time in minutes"
             />
           </div>
+          <Result fuelRequired={this.state.fuelRequired} isActive={this.state.showFuelRequired} />
+          <Button id="btn" as="input" type="submit" value="Calculate" />
         </form>
-        <Result fuelRequired={this.state.fuelRequired} isActive={this.state.showFuelRequired} />
-        <Button id="btn" as="input" type="submit" value="Calculate" />
       </div>
     );
   }

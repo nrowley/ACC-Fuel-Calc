@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 
 export class Result extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      fuelRequired: this.props.fuelRequired,
-      isActive: this.props.isActive,
-    };
-  }
   handleShow = () => {
     this.setState({
       isActive: true,
@@ -17,7 +9,7 @@ export class Result extends Component {
 
   render() {
     return (
-      <div>{this.state.isActive ? <h3>Fuel Required: {this.state.fuelRequired}</h3> : null}</div>
+      <div>{this.props.isActive ? <h3>Fuel Required: {this.props.fuelRequired}L</h3> : null}</div>
     );
   }
 }
