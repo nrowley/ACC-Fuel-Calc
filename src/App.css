@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  font-family: "Roboto";
+  font-family: "Arial";
 }
 
 .App-header {
@@ -19,12 +19,44 @@
 }
 
 .container {
+  margin-top: 10%;
   background-color: white;
   border-radius: 5px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-  width: 400px;
+  width: 300px;
 }
 
 .form {
   padding: 30px 40px;
+}
+.input-group {
+  margin-bottom: 10px;
+  padding-bottom: 20px;
+  position: relative;
+}
+.input-group label {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #464646;
+  columns: #777777;
+  display: block;
+  text-align: left;
+  margin-bottom: 5px;
+}
+
+.input-group input {
+  border: 2px solid #88888860;
+  border-radius: 4px;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+}
+.input-group input:focus {
+  outline: 0;
+  border-color: #f59842;
+}
+
+.btn {
+  margin: 2%;
+  font-family: Arial, Helvetica, sans-serif;
 }
