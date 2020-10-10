@@ -5,13 +5,14 @@ import { doWork } from "./calculation";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../App.css";
 
-export default class form extends Component {
+export default class Form extends Component {
   constructor(props) {
     super(props);
     this.state = {
       duration: "",
       fuelUsage: "",
-      lapTimes: "",
+      lapMinutes: "",
+      lapSeconds: "",
       showFuelRequired: false,
       fuelRequired: 0,
     };
@@ -19,26 +20,34 @@ export default class form extends Component {
     this.submitClick = this.submitClick.bind(this);
     this.handleDurationChange = this.handleDurationChange.bind(this);
     this.handleFuelUsageChange = this.handleFuelUsageChange.bind(this);
-    this.handleLapTimesChange = this.handleLapTimesChange.bind(this);
+    this.handleLapMinChange = this.handleLapMinChange.bind(this);
+    this.handleLapSecChange = this.handleLapSecChange.bind(this);
   }
 
   submitClick = (event) => {
-    //console.log(this.state.duration);
     /*
     calculate fuel usage..
     */
 
+    if (
+      this.state.duration &&
+      this.state.fuelUsage &&
+      this.state.lapMinutes &&
+      this.state.lapSeconds !== ""
+    ) {
+      event.preventDefault();
+      const { duration, fuelUsage, lapMinutes, lapSeconds } = this.state;
+      const totalFuelRequired = doWork(lapMinutes + ":" + lapSeconds, fuelUsage, duration);
+
+      this.setState({
+        fuelRequired: totalFuelRequired,
+      });
+
+      this.setState({
+        showFuelRequired: true,
+      });
+    }
     event.preventDefault();
-    const { duration, fuelUsage, lapTimes } = this.state;
-    const totalFuelRequired = doWork(lapTimes, fuelUsage, duration);
-
-    this.setState({
-      fuelRequired: totalFuelRequired,
-    });
-
-    this.setState({
-      showFuelRequired: true,
-    });
   };
 
   handleDurationChange(event) {
@@ -53,12 +62,15 @@ export default class form extends Component {
     });
   }
 
-  handleLapTimesChange(event) {
+  handleLapMinChange(event) {
     this.setState({
-      lapTimes: event.target.value,
+      lapMinutes: event.target.value,
     });
-
-    //this.render();
+  }
+  handleLapSecChange(event) {
+    this.setState({
+      lapSeconds: event.target.value,
+    });
   }
 
   render() {
@@ -84,16 +96,32 @@ export default class form extends Component {
               placeholder="3.5 L/lap"
             />
           </div>
-          <div className="input-group">
+          <div className="time-group">
             <label>Average Lap Times</label>
-            <input
-              type="text"
-              value={this.state.lapTimes}
-              onChange={this.handleLapTimesChange}
-              placeholder="Enter lap time in minutes"
-            />
+            <div className="form-inline">
+              <input
+                type="number"
+                value={this.state.lapTimes}
+                onChange={this.handleLapMinChange}
+                placeholder="minutes"
+                min="0"
+                max="60"
+              />
+              <input
+                type="number"
+                value={this.state.lapTimes}
+                onChange={this.handleLapSecChange}
+                placeholder="seconds"
+                min="00"
+                max="60"
+              />
+            </div>
           </div>
-          <Result fuelRequired={this.state.fuelRequired} isActive={this.state.showFuelRequired} />
+          <Result
+            fuelRequired={this.state.fuelRequired}
+            isActive={this.state.showFuelRequired}
+            fuelPerLap={this.state.fuelUsage}
+          />
           <Button id="btn" as="input" type="submit" value="Calculate" />
         </form>
       </div>

@@ -45,7 +45,7 @@
 }
 
 .input-group input {
-  border: 2px solid #88888860;
+  border: 2px solid #0099ff60;
   border-radius: 4px;
   display: block;
   width: 100%;
@@ -55,6 +55,21 @@
 .input-group input:focus {
   outline: 0;
   border-color: #f59842;
+}
+
+.time-group {
+  justify-content: center;
+  text-align: left;
+  justify-items: center;
+}
+.time-group input {
+  border: 2px solid #0099ff60;
+
+  justify-content: center;
+  width: 10%;
+  display: flex;
+  flex-direction: row;
+  margin-right: 10px;
 }
 
 h3 {
