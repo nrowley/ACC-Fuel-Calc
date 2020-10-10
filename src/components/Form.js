@@ -75,56 +75,58 @@ export default class Form extends Component {
 
   render() {
     return (
-      <div className="container">
-        <form className="form" onSubmit={this.submitClick}>
-          <div className="input-group">
-            <label>Duration</label>
-            <input
-              type="text"
-              value={this.state.duration}
-              onChange={this.handleDurationChange}
-              placeholder="
+      <section className="main-section">
+        <div className="container">
+          <form className="form" onSubmit={this.submitClick}>
+            <div className="input-group">
+              <label>Duration</label>
+              <input
+                type="text"
+                value={this.state.duration}
+                onChange={this.handleDurationChange}
+                placeholder="
               Enter duration in minutes"
-            />
-          </div>
-          <div className="input-group">
-            <label>Fuel Usage</label>
-            <input
-              type="text"
-              value={this.state.fuelUsage}
-              onChange={this.handleFuelUsageChange}
-              placeholder="3.5 L/lap"
-            />
-          </div>
-          <div className="time-group">
-            <label>Average Lap Times</label>
-            <div className="form-inline">
-              <input
-                type="number"
-                value={this.state.lapTimes}
-                onChange={this.handleLapMinChange}
-                placeholder="minutes"
-                min="0"
-                max="60"
-              />
-              <input
-                type="number"
-                value={this.state.lapTimes}
-                onChange={this.handleLapSecChange}
-                placeholder="seconds"
-                min="00"
-                max="60"
               />
             </div>
-          </div>
-          <Result
-            fuelRequired={this.state.fuelRequired}
-            isActive={this.state.showFuelRequired}
-            fuelPerLap={this.state.fuelUsage}
-          />
-          <Button id="btn" as="input" type="submit" value="Calculate" />
-        </form>
-      </div>
+            <div className="input-group">
+              <label>Fuel Usage</label>
+              <input
+                type="text"
+                value={this.state.fuelUsage}
+                onChange={this.handleFuelUsageChange}
+                placeholder="3.5 L/lap"
+              />
+            </div>
+            <div className="time-group">
+              <label>Average Lap Times</label>
+              <div className="form-inline">
+                <input
+                  type="number"
+                  value={this.state.lapTimes}
+                  onChange={this.handleLapMinChange}
+                  placeholder="minutes"
+                  min="0"
+                  max="60"
+                />
+                <input
+                  type="number"
+                  value={this.state.lapTimes}
+                  onChange={this.handleLapSecChange}
+                  placeholder="seconds"
+                  min="00"
+                  max="60"
+                />
+              </div>
+            </div>
+            <Result
+              fuelRequired={this.state.fuelRequired}
+              isActive={this.state.showFuelRequired}
+              fuelPerLap={this.state.fuelUsage}
+            />
+            <Button id="btn" as="input" type="submit" value="Calculate" />
+          </form>
+        </div>
+      </section>
     );
   }
 }
