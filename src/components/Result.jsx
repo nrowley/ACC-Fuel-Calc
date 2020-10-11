@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 export class Result extends Component {
   render() {
@@ -24,5 +25,10 @@ export class Result extends Component {
     );
   }
 }
+
+Result.propTypes = {
+  fuelRequired: PropTypes.number,
+  fuelPerLap: PropTypes.number,
+};
 
 export default Result;
